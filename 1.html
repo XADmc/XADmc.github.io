@@ -408,29 +408,54 @@
       animation: twinkle 3s infinite;
     }
 
-    /* 添加按钮样式 */
+    /* 修改按钮容器和按钮样式 */
     .choice-buttons {
-      margin-top: 40px;
-      opacity: 0;
-      animation: fadeIn 1s ease-in forwards 3s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;  /* 按钮之间的间距 */
+      margin-top: 30px;
+      flex-wrap: wrap;  /* 在小屏幕上允许换行 */
+      padding: 0 20px;  /* 两边留出空间 */
     }
 
     .choice-btn {
-      padding: 15px 30px;
-      margin: 0 15px;
-      font-size: 1.2em;
+      min-width: 150px;  /* 设置最小宽度 */
+      padding: 12px 25px;
+      font-size: 16px;
       border: none;
       border-radius: 25px;
-      cursor: pointer;
-      background: linear-gradient(45deg, #ffb6c1, #ffd1dc);
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
       color: white;
-      box-shadow: 0 5px 15px rgba(255, 182, 193, 0.4);
+      cursor: pointer;
       transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      margin: 10px;  /* 确保按钮之间有足够间距 */
+      -webkit-appearance: none;  /* 移除iOS默认样式 */
+      -webkit-tap-highlight-color: transparent;  /* 移除iOS点击高亮 */
     }
 
     .choice-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255, 182, 193, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .choice-btn:active {
+      transform: translateY(1px);
+    }
+
+    /* 添加媒体查询以适应小屏幕 */
+    @media (max-width: 480px) {
+      .choice-buttons {
+        flex-direction: column;  /* 在小屏幕上垂直排列 */
+        gap: 15px;
+      }
+
+      .choice-btn {
+        width: 80%;  /* 在小屏幕上占据更大宽度 */
+        max-width: 250px;
+        margin: 5px 0;
+      }
     }
 
     /* 添加新界面的基本样式 */
@@ -532,6 +557,108 @@
           0 0 24px #fff,
           0 0 36px #fff;
       }
+    }
+
+    /* 修改蛋糕容器样式 */
+    .cake-container {
+      position: relative;
+      width: 300px;
+      height: 400px;
+      margin: 100px auto;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-perspective: 1000px;
+      perspective: 1000px;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+    /* 修改蛋糕主体样式 */
+    .cake {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      margin: 0 auto;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+
+    /* 修改蛋糕层样式 */
+    .cake-layer {
+      position: absolute;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      border-radius: 8px;
+      background: #ffa5b5;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      box-shadow: 
+        0 5px 15px rgba(0,0,0,0.2),
+        inset 0 -8px 12px rgba(255,255,255,0.3),
+        inset 0 -15px 25px rgba(0,0,0,0.1);
+    }
+
+    /* 修改装饰品样式 */
+    .cream-swirl {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, #fff, #f8f8f8);
+      border-radius: 50% 50% 45% 45%;
+      box-shadow: 
+        inset -2px -2px 6px rgba(255,182,193,0.3),
+        0 5px 10px rgba(0,0,0,0.1);
+      -webkit-transform-origin: center bottom;
+      transform-origin: center bottom;
+      -webkit-animation: swirl 0.5s ease-out forwards;
+      animation: swirl 0.5s ease-out forwards;
+      z-index: 4;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+    .strawberry {
+      position: absolute;
+      width: 25px;
+      height: 30px;
+      background: linear-gradient(135deg, #ff3366, #ff4d4d);
+      border-radius: 50% 50% 45% 45%;
+      -webkit-transform: rotate(-15deg);
+      transform: rotate(-15deg);
+      box-shadow: 
+        inset 2px 2px 8px rgba(255,255,255,0.4),
+        inset -2px -2px 8px rgba(0,0,0,0.2),
+        0 5px 10px rgba(0,0,0,0.1);
+      z-index: 5;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+    /* 添加iOS特定的样式 */
+    @supports (-webkit-touch-callout: none) {
+      .cake-container {
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+      }
+      
+      .cake-layer {
+        -webkit-transform: translate3d(-50%, 0, 0);
+        transform: translate3d(-50%, 0, 0);
+      }
+
+      .cream-swirl, .strawberry {
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+      }
+    }
+
+    /* 修改蛋糕界面背景 */
+    #cakeContent {
+      background: linear-gradient(135deg, #ffe6f0 0%, #ffd1dc 100%);
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-overflow-scrolling: touch;
     }
   </style>
 </head>
