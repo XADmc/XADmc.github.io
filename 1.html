@@ -408,28 +408,29 @@
       animation: twinkle 3s infinite;
     }
 
-    /* 修改按钮容器样式 */
+    /* 修改按钮容器和按钮样式 */
     .choice-buttons {
       display: flex;
-      flex-direction: column;  /* 改为垂直排列 */
+      justify-content: center;
       align-items: center;
-      gap: 30px;  /* 增加按钮之间的间距 */
-      margin-top: 40px;
-      opacity: 0;
-      animation: fadeIn 1s ease-in forwards 3s;
+      gap: 20px;  /* 按钮之间的间距 */
+      margin-top: 30px;
+      flex-wrap: wrap;  /* 在小屏幕上允许换行 */
+      padding: 0 20px;  /* 两边留出空间 */
     }
 
     .choice-btn {
-      min-width: 200px;
-      padding: 15px 30px;
-      font-size: 1.2em;
+      min-width: 150px;  /* 设置最小宽度 */
+      padding: 12px 25px;
+      font-size: 16px;
       border: none;
       border-radius: 25px;
-      background: linear-gradient(45deg, #ffb6c1, #ffd1dc);
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
       color: white;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(255, 182, 193, 0.4);
       transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      margin: 10px;  /* 确保按钮之间有足够间距 */
       -webkit-appearance: none;  /* 移除iOS默认样式 */
       -webkit-tap-highlight-color: transparent;  /* 移除iOS点击高亮 */
     }
@@ -559,98 +560,72 @@
     }
 
     /* 修改蛋糕容器样式 */
-    #cakeContent {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #ffe6f0 0%, #ffd1dc 100%);
-      opacity: 0;
-      transition: opacity 1s ease;
-      z-index: 1000;
-    }
-
     .cake-container {
       position: relative;
       width: 300px;
       height: 400px;
       margin: 100px auto;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-perspective: 1000px;
+      perspective: 1000px;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
 
+    /* 修改蛋糕主体样式 */
     .cake {
       position: relative;
       width: 280px;
       height: 280px;
       margin: 0 auto;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
     }
 
-    /* 蛋糕层样式 */
+    /* 修改蛋糕层基础样式 */
     .cake-layer {
       position: absolute;
       left: 50%;
+      -webkit-transform: translateX(-50%);
       transform: translateX(-50%);
       border-radius: 8px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      box-shadow: 
+        0 5px 15px rgba(0,0,0,0.2),
+        inset 0 -8px 12px rgba(255,255,255,0.3),
+        inset 0 -15px 25px rgba(0,0,0,0.1);
     }
 
-    /* 底层 */
+    /* 底层样式 */
     .layer-bottom {
-      bottom: 50px;  /* 调整位置 */
+      bottom: 0;
       width: 280px;
       height: 75px;
       background: linear-gradient(to bottom, #ffa5b5, #ff8da1);
       z-index: 1;
     }
 
-    /* 中层 */
+    /* 中层样式 */
     .layer-middle {
-      bottom: 115px;  /* 调整位置 */
+      bottom: 65px;
       width: 240px;
       height: 60px;
       background: linear-gradient(to bottom, #ffb6c1, #ffa5b5);
       z-index: 2;
     }
 
-    /* 顶层 */
+    /* 顶层样式 */
     .layer-top {
-      bottom: 165px;  /* 调整位置 */
+      bottom: 115px;
       width: 200px;
       height: 50px;
       background: linear-gradient(to bottom, #ffc0cb, #ffb6c1);
       z-index: 3;
     }
 
-    /* 奶油装饰样式 */
-    .cream-swirl {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: #fff;
-      border-radius: 50%;
-      box-shadow: 
-        inset -2px -2px 6px rgba(255,182,193,0.3),
-        0 5px 10px rgba(0,0,0,0.1);
-      z-index: 4;
-    }
-
-    /* 草莓样式 */
-    .strawberry {
-      position: absolute;
-      width: 25px;
-      height: 30px;
-      background: linear-gradient(135deg, #ff3366, #ff4d4d);
-      border-radius: 50% 50% 45% 45%;
-      transform: rotate(-15deg);
-      box-shadow: 
-        inset 2px 2px 8px rgba(255,255,255,0.4),
-        inset -2px -2px 8px rgba(0,0,0,0.2),
-        0 5px 10px rgba(0,0,0,0.1);
-      z-index: 5;
-    }
-
-    /* 蜡烛样式 */
+    /* 添加蜡烛样式 */
     .candle {
       position: absolute;
       width: 15px;
@@ -696,6 +671,68 @@
         transform: translateX(-50%) scale(0.9);
         opacity: 0.8;
       }
+    }
+
+    /* 修改装饰品样式 */
+    .cream-swirl {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, #fff, #f8f8f8);
+      border-radius: 50% 50% 45% 45%;
+      box-shadow: 
+        inset -2px -2px 6px rgba(255,182,193,0.3),
+        0 5px 10px rgba(0,0,0,0.1);
+      -webkit-transform-origin: center bottom;
+      transform-origin: center bottom;
+      -webkit-animation: swirl 0.5s ease-out forwards;
+      animation: swirl 0.5s ease-out forwards;
+      z-index: 4;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+    .strawberry {
+      position: absolute;
+      width: 25px;
+      height: 30px;
+      background: linear-gradient(135deg, #ff3366, #ff4d4d);
+      border-radius: 50% 50% 45% 45%;
+      -webkit-transform: rotate(-15deg);
+      transform: rotate(-15deg);
+      box-shadow: 
+        inset 2px 2px 8px rgba(255,255,255,0.4),
+        inset -2px -2px 8px rgba(0,0,0,0.2),
+        0 5px 10px rgba(0,0,0,0.1);
+      z-index: 5;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+    /* 添加iOS特定的样式 */
+    @supports (-webkit-touch-callout: none) {
+      .cake-container {
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+      }
+      
+      .cake-layer {
+        -webkit-transform: translate3d(-50%, 0, 0);
+        transform: translate3d(-50%, 0, 0);
+      }
+
+      .cream-swirl, .strawberry {
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+      }
+    }
+
+    /* 修改蛋糕界面背景 */
+    #cakeContent {
+      background: linear-gradient(135deg, #ffe6f0 0%, #ffd1dc 100%);
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-overflow-scrolling: touch;
     }
   </style>
 </head>
@@ -748,38 +785,38 @@
       <div class="sparkle-container"></div>
       <div class="cake">
         <!-- 蛋糕层 -->
-        <div class="layer-bottom"></div>
-        <div class="layer-middle"></div>
-        <div class="layer-top"></div>
+        <div class="cake-layer layer-bottom"></div>
+        <div class="cake-layer layer-middle"></div>
+        <div class="cake-layer layer-top"></div>
 
         <!-- 奶油装饰 - 顶层（200px宽） -->
-        <div class="cream-swirl" style="bottom: 215px; left: 20%"></div>
-        <div class="cream-swirl" style="bottom: 215px; left: 35%"></div>
-        <div class="cream-swirl" style="bottom: 215px; left: 50%"></div>
-        <div class="cream-swirl" style="bottom: 215px; left: 65%"></div>
+        <div class="cream-swirl" style="bottom: 165px; left: 20%"></div>
+        <div class="cream-swirl" style="bottom: 165px; left: 35%"></div>
+        <div class="cream-swirl" style="bottom: 165px; left: 50%"></div>
+        <div class="cream-swirl" style="bottom: 165px; left: 65%"></div>
 
         <!-- 奶油装饰 - 中层（240px宽） -->
-        <div class="cream-swirl" style="bottom: 175px; left: 15%"></div>
-        <div class="cream-swirl" style="bottom: 175px; left: 35%"></div>
-        <div class="cream-swirl" style="bottom: 175px; left: 55%"></div>
-        <div class="cream-swirl" style="bottom: 175px; left: 75%"></div>
+        <div class="cream-swirl" style="bottom: 125px; left: 15%"></div>
+        <div class="cream-swirl" style="bottom: 125px; left: 35%"></div>
+        <div class="cream-swirl" style="bottom: 125px; left: 55%"></div>
+        <div class="cream-swirl" style="bottom: 125px; left: 75%"></div>
 
         <!-- 奶油装饰 - 底层（280px宽） -->
-        <div class="cream-swirl" style="bottom: 125px; left: 10%"></div>
-        <div class="cream-swirl" style="bottom: 125px; left: 25%"></div>
-        <div class="cream-swirl" style="bottom: 125px; left: 40%"></div>
-        <div class="cream-swirl" style="bottom: 125px; left: 55%"></div>
-        <div class="cream-swirl" style="bottom: 125px; left: 70%"></div>
-        <div class="cream-swirl" style="bottom: 125px; left: 85%"></div>
+        <div class="cream-swirl" style="bottom: 75px; left: 10%"></div>
+        <div class="cream-swirl" style="bottom: 75px; left: 25%"></div>
+        <div class="cream-swirl" style="bottom: 75px; left: 40%"></div>
+        <div class="cream-swirl" style="bottom: 75px; left: 55%"></div>
+        <div class="cream-swirl" style="bottom: 75px; left: 70%"></div>
+        <div class="cream-swirl" style="bottom: 75px; left: 85%"></div>
 
         <!-- 草莓装饰 -->
-        <div class="strawberry" style="bottom: 220px; left: 30%"></div>
-        <div class="strawberry" style="bottom: 220px; left: 70%"></div>
-        <div class="strawberry" style="bottom: 180px; left: 25%"></div>
-        <div class="strawberry" style="bottom: 180px; left: 65%"></div>
+        <div class="strawberry" style="bottom: 170px; left: 30%"></div>
+        <div class="strawberry" style="bottom: 170px; left: 70%"></div>
+        <div class="strawberry" style="bottom: 130px; left: 25%"></div>
+        <div class="strawberry" style="bottom: 130px; left: 65%"></div>
 
         <!-- 蜡烛 -->
-        <div class="candle" style="bottom: 215px;">
+        <div class="candle" style="bottom: 165px;">
           <div class="flame"></div>
         </div>
       </div>
