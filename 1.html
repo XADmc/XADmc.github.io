@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生日祝福</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ffd1ff 0%, #fad0c4 100%);
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+
+    body:before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 20%),
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.3) 0%, transparent 20%);
+      pointer-events: none;
+    }
+
+    .envelope {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      background: #f5f5f5;
+      border-radius: 5px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      animation: float 3s ease-in-out infinite;
+      overflow: hidden;
+    }
+
+    .envelope:hover {
+      transform: scale(1.05);
+    }
+
+    .envelope:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 125px 150px;
+      border-color: #e6e6e6 transparent transparent transparent;
+      transform-origin: top;
+      transition: transform 0.4s ease;
+      z-index: 2;
+      background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.1) 50%);
+      animation: shimmer 2s infinite;
+    }
+
+    .envelope:hover:before {
+      transform: rotateX(180deg);
+    }
+
+    .letter {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #333;
+      width: 80%;
+      z-index: 3;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .letter h2 {
+      margin: 0;
+      font-size: 1.2em;
+      color: #ff6b6b;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+      padding: 0 10px;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-20px) rotate(5deg);
+      }
+    }
+
+    #birthdayContent {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease;
+      background: linear-gradient(135deg, #141e30 0%, #243b55 100%);
+    }
+
+    .container {
+      text-align: center;
+      color: white;
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+      border-radius: 20px;
+      animation: fadeScale 1s ease-out forwards;
+    }
+
+    .birthday-text {
+      font-size: 3.5em;
+      margin-bottom: 30px;
+      opacity: 0;
+      animation: fadeIn 2s ease-in forwards;
+      background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+      font-family: "Microsoft YaHei", sans-serif;
+      letter-spacing: 2px;
+      padding: 20px;
+    }
+
+    .wish-text {
+      font-size: 1.2em;
+      line-height: 2;
+      margin: 0 auto;
+      max-width: 800px;
+      padding: 30px;
+      opacity: 0;
+      animation: fadeIn 2s ease-in forwards 1s;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+    }
+
+    .sparkles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .sparkle {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: snow 10s linear infinite;
+      box-shadow: 0 0 5px #fff;
+    }
+
+    .sparkle:nth-child(3n) {
+      background: rgba(255,255,255,0.9);
+      height: 7px !important;
+      width: 7px !important;
+      animation-duration: 8s;
+    }
+
+    .sparkle:nth-child(3n+1) {
+      background: rgba(255,255,255,0.8);
+      height: 4px !important;
+      width: 4px !important;
+      animation-duration: 12s;
+    }
+
+    .sparkle:nth-child(3n+2) {
+      background: rgba(255,255,255,0.7);
+      height: 3px !important;
+      width: 3px !important;
+      animation-duration: 15s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes snow {
+      0% {
+        transform: translateY(-100%) translateX(-20px) rotate(0deg);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.8;
+      }
+      50% {
+        transform: translateY(50vh) translateX(20px) rotate(180deg);
+      }
+      100% {
+        transform: translateY(100vh) translateX(-20px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .paragraph {
+      margin: 20px 0;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+
+    .container:before, .container:after {
+      content: "❀";
+      font-size: 2em;
+      color: #ff9a9e;
+      margin: 0 20px;
+      opacity: 0.8;
+    }
+
+    .envelope:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+      transform: translateY(20px);
+      animation: slideUp 1s forwards 0.5s;
+      z-index: 1;
+    }
+
+    .hearts {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      color: #ff6b6b;
+      animation: floatHeart 4s ease-in-out infinite;
+      opacity: 0;
+    }
+
+    .wish-text .paragraph {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .wish-text .paragraph:nth-child(1) { animation: slideUp 0.6s ease forwards 1s; }
+    .wish-text .paragraph:nth-child(2) { animation: slideUp 0.6s ease forwards 1.3s; }
+    .wish-text .paragraph:nth-child(3) { animation: slideUp 0.6s ease forwards 1.6s; }
+    .wish-text .paragraph:nth-child(4) { animation: slideUp 0.6s ease forwards 1.9s; }
+    .wish-text .paragraph:nth-child(5) { animation: slideUp 0.6s ease forwards 2.2s; }
+    .wish-text .paragraph:nth-child(6) { animation: slideUp 0.6s ease forwards 2.5s; }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0;
+      }
+      25% {
+        opacity: 1;
+      }
+      75% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--tx), -100px) rotate(var(--rot));
+        opacity: 0;
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -100% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    @keyframes fadeScale {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="envelope" onclick="openLetter()">
+    <div class="letter">
+      <h2>叮咚！亲爱的邵靖雯同学请查收全世界最最最可爱的boy给你预约的生日祝福 💌</h2>
+    </div>
+  </div>
+
+  <div id="birthdayContent">
+    <!-- 原来的生日祝福内容 -->
+    <div class="container">
+      <div class="sparkles" id="sparkles"></div>
+      <h1 class="birthday-text">邵靖雯宝宝生日快乐</h1>
+      <p class="wish-text">
+        <span class="paragraph">20岁生日快乐呀</span>
+        <span class="paragraph">一岁一礼 一寸欢喜</span>
+        <span class="paragraph">
+          很高兴能陪你度过你的20岁生日，这是我们在一起后陪你过的第一个生日。半年的时间里，我们一起走过了好多地方，我们也一起有了好多美好的记忆。
+        </span>
+        <span class="paragraph">
+          很抱歉这次我没能出现在你生日的现场，下次我定不会缺席。我们还在异地，所以我更加珍惜在一起的每个时刻，我们的每张合照，每张与你有关的风景，都镌刻着你我的满心憧憬和甜甜的幸福。
+        </span>
+        <span class="paragraph">
+          愿我们一起牵着手，一起成长，一起感受，一起成为彼此最重要的人。
+        </span>
+        <span class="paragraph">
+          最后，祝我最爱的宝宝生日快乐，天天开心，岁岁平安，年年有我 ❤️
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function openLetter() {
+      const envelope = document.querySelector('.envelope');
+      const birthdayContent = document.getElementById('birthdayContent');
+      
+      envelope.style.transform = 'scale(1.5) rotate(5deg)';
+      envelope.style.opacity = '0';
+      
+      setTimeout(() => {
+        envelope.style.display = 'none';
+        birthdayContent.style.display = 'block';
+        document.body.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #2d1f3d 100%)';
+        setTimeout(() => {
+          birthdayContent.style.opacity = '1';
+          createSparkles();
+        }, 100);
+      }, 800);
+    }
+
+    function createSparkles() {
+      const sparklesContainer = document.getElementById('sparkles');
+      const numberOfSparkles = 100;
+
+      function createSnowflake() {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.animationDelay = Math.random() * 5 + 's';
+        sparkle.style.opacity = Math.random() * 0.3 + 0.7;
+        sparklesContainer.appendChild(sparkle);
+
+        setTimeout(() => {
+          sparkle.remove();
+          createSnowflake();
+        }, 15000);
+      }
+
+      for (let i = 0; i < numberOfSparkles; i++) {
+        setTimeout(() => {
+          createSnowflake();
+        }, Math.random() * 5000);
+      }
+    }
+
+    function createHearts() {
+      const heartsContainer = document.createElement('div');
+      heartsContainer.className = 'hearts';
+      document.querySelector('.envelope').appendChild(heartsContainer);
+
+      function addHeart() {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '❤';
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.setProperty('--tx', (Math.random() * 100 - 50) + 'px');
+        heart.style.setProperty('--rot', (Math.random() * 360) + 'deg');
+        heartsContainer.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 4000);
+      }
+
+      setInterval(addHeart, 300);
+    }
+
+    window.addEventListener('load', createHearts);
+  </script>
+</body>
+</html>
