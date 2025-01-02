@@ -407,6 +407,132 @@
       color: #ffb6c1;
       animation: twinkle 3s infinite;
     }
+
+    /* 添加按钮样式 */
+    .choice-buttons {
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeIn 1s ease-in forwards 3s;
+    }
+
+    .choice-btn {
+      padding: 15px 30px;
+      margin: 0 15px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      background: linear-gradient(45deg, #ffb6c1, #ffd1dc);
+      color: white;
+      box-shadow: 0 5px 15px rgba(255, 182, 193, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .choice-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 182, 193, 0.6);
+    }
+
+    /* 添加新界面的基本样式 */
+    #lvContent, #cakeContent {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ffe6f0 0%, #ffd1dc 100%);
+      opacity: 0;
+      transition: opacity 1s ease;
+      z-index: 1000;
+    }
+
+    /* 修改星空背景样式 */
+    .starry-sky {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #0a0a2a 0%, #1a1a4a 100%);
+      overflow: hidden;
+    }
+
+    /* 增加星星的数量和亮度 */
+    .star-small {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle-small 2s infinite ease-in-out;
+      box-shadow: 0 0 4px #fff;
+    }
+
+    .star-medium {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle-medium 3s infinite ease-in-out;
+      box-shadow: 0 0 6px #fff;
+    }
+
+    .star-large {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle-large 4s infinite ease-in-out;
+      box-shadow: 0 0 8px #fff;
+    }
+
+    /* 增强星星的光晕效果 */
+    .star-glow:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      box-shadow: 
+        0 0 10px #fff,
+        0 0 20px #fff,
+        0 0 30px rgba(255, 255, 255, 0.8);
+      animation: pulse-glow 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle-small {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    @keyframes twinkle-medium {
+      0%, 100% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    @keyframes twinkle-large {
+      0%, 100% { opacity: 0.5; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { 
+        box-shadow: 
+          0 0 8px #fff,
+          0 0 16px #fff,
+          0 0 24px #fff;
+      }
+      50% { 
+        box-shadow: 
+          0 0 12px #fff,
+          0 0 24px #fff,
+          0 0 36px #fff;
+      }
+    }
   </style>
 </head>
 <body>
@@ -437,6 +563,62 @@
           最后，祝我最爱的宝宝生日快乐，天天开心，岁岁平安，年年有我 ❤️
         </span>
       </p>
+      <div class="choice-buttons">
+        <button class="choice-btn" onclick="showCake()">想吃蛋糕！</button>
+        <button class="choice-btn" onclick="showLV()">不想吃~</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LV包包界面 -->
+  <div id="lvContent">
+    <div class="starry-sky">
+      <!-- 星星会通过JavaScript动态添加 -->
+    </div>
+  </div>
+
+  <!-- 蛋糕界面 -->
+  <div id="cakeContent">
+    <div class="cake-container">
+      <!-- 添加星光容器 -->
+      <div class="sparkle-container"></div>
+      <div class="cake">
+        <!-- 蛋糕层 -->
+        <div class="cake-layer layer-bottom"></div>
+        <div class="cake-layer layer-middle"></div>
+        <div class="cake-layer layer-top"></div>
+
+        <!-- 奶油装饰 - 顶层（200px宽） -->
+        <div class="cream-swirl" style="bottom: 165px; left: 20%"></div>
+        <div class="cream-swirl" style="bottom: 165px; left: 35%"></div>
+        <div class="cream-swirl" style="bottom: 165px; left: 50%"></div>
+        <div class="cream-swirl" style="bottom: 165px; left: 65%"></div>
+
+        <!-- 奶油装饰 - 中层（240px宽） -->
+        <div class="cream-swirl" style="bottom: 125px; left: 15%"></div>
+        <div class="cream-swirl" style="bottom: 125px; left: 35%"></div>
+        <div class="cream-swirl" style="bottom: 125px; left: 55%"></div>
+        <div class="cream-swirl" style="bottom: 125px; left: 75%"></div>
+
+        <!-- 奶油装饰 - 底层（280px宽） -->
+        <div class="cream-swirl" style="bottom: 75px; left: 10%"></div>
+        <div class="cream-swirl" style="bottom: 75px; left: 25%"></div>
+        <div class="cream-swirl" style="bottom: 75px; left: 40%"></div>
+        <div class="cream-swirl" style="bottom: 75px; left: 55%"></div>
+        <div class="cream-swirl" style="bottom: 75px; left: 70%"></div>
+        <div class="cream-swirl" style="bottom: 75px; left: 85%"></div>
+
+        <!-- 草莓装饰 -->
+        <div class="strawberry" style="bottom: 170px; left: 30%"></div>
+        <div class="strawberry" style="bottom: 170px; left: 70%"></div>
+        <div class="strawberry" style="bottom: 130px; left: 25%"></div>
+        <div class="strawberry" style="bottom: 130px; left: 65%"></div>
+
+        <!-- 蜡烛 -->
+        <div class="candle" style="bottom: 165px;">
+          <div class="flame"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -530,6 +712,93 @@
       createHearts();
       createStars();
     });
+
+    // 添加新的函数
+    function showLV() {
+      const birthdayContent = document.getElementById('birthdayContent');
+      const lvContent = document.getElementById('lvContent');
+      
+      birthdayContent.style.opacity = '0';
+      setTimeout(() => {
+        birthdayContent.style.display = 'none';
+        lvContent.style.display = 'block';
+        setTimeout(() => {
+          lvContent.style.opacity = '1';
+          createStarrySky();
+        }, 100);
+      }, 1000);
+    }
+
+    function showCake() {
+      const birthdayContent = document.getElementById('birthdayContent');
+      const cakeContent = document.getElementById('cakeContent');
+      
+      birthdayContent.style.opacity = '0';
+      setTimeout(() => {
+        birthdayContent.style.display = 'none';
+        cakeContent.style.display = 'block';
+        setTimeout(() => {
+          cakeContent.style.opacity = '1';
+          createCakeSparkles();
+        }, 100);
+      }, 1000);
+    }
+
+    function createCakeSparkles() {
+      const sparkleContainer = document.querySelector('.sparkle-container');
+      const numberOfSparkles = 30;
+
+      for (let i = 0; i < numberOfSparkles; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle-star';
+        
+        // 随机位置
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.top = Math.random() * 100 + '%';
+        
+        // 随机动画延迟
+        sparkle.style.animationDelay = Math.random() * 2 + 's';
+        
+        sparkleContainer.appendChild(sparkle);
+      }
+    }
+
+    function createStarrySky() {
+      const sky = document.querySelector('.starry-sky');
+      const smallStars = 200;  // 增加小星星数量
+      const mediumStars = 100; // 增加中等星星数量
+      const largeStars = 50;   // 增加大星星数量
+
+      // 创建小星星
+      for (let i = 0; i < smallStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star-small';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 2 + 's';
+        sky.appendChild(star);
+      }
+
+      // 创建中等星星
+      for (let i = 0; i < mediumStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star-medium star-glow';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        sky.appendChild(star);
+      }
+
+      // 创建大星星
+      for (let i = 0; i < largeStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star-large star-glow';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 4 + 's';
+        sky.appendChild(star);
+      }
+    }
   </script>
 </body>
 </html>
