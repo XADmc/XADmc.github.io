@@ -9,12 +9,15 @@
       margin: 0;
       padding: 0;
       min-height: 100vh;
+      min-height: -webkit-fill-available;
       display: flex;
       justify-content: center;
       align-items: center;
       background: linear-gradient(135deg, #ffd1ff 0%, #fad0c4 100%);
       font-family: 'Arial', sans-serif;
       overflow: hidden;
+      position: fixed;
+      width: 100%;
     }
 
     body:before {
@@ -24,9 +27,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background:
-              radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 20%),
-              radial-gradient(circle at 80% 80%, rgba(255,255,255,0.3) 0%, transparent 20%);
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 20%),
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.3) 0%, transparent 20%);
       pointer-events: none;
     }
 
@@ -104,13 +107,16 @@
       position: fixed;
       top: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
       width: 100%;
       height: 100%;
       opacity: 0;
       transition: opacity 1s ease;
       background: linear-gradient(135deg, #141e30 0%, #243b55 100%);
-      overflow-y: auto;
+      overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
+      z-index: 1000;
     }
 
     .container {
@@ -126,7 +132,7 @@
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
       border-radius: 20px;
       animation: fadeScale 1s ease-out forwards;
-      min-height: calc(100% - 40px);
+      min-height: auto;
     }
 
     .birthday-text {
@@ -326,7 +332,22 @@
       }
     }
 
+    @supports (-webkit-touch-callout: none) {
+      body {
+        height: -webkit-fill-available;
+      }
+      
+      #birthdayContent {
+        height: -webkit-fill-available;
+      }
+    }
+
     @media (max-width: 768px) {
+      .container {
+        margin: 10px;
+        padding: 20px 15px;
+      }
+
       .birthday-text {
         font-size: 2.5em;
         padding: 10px;
@@ -334,7 +355,8 @@
 
       .wish-text {
         font-size: 1em;
-        padding: 20px;
+        padding: 15px;
+        margin: 10px;
       }
 
       .letter h2 {
@@ -344,103 +366,103 @@
   </style>
 </head>
 <body>
-<div class="envelope" onclick="openLetter()">
-  <div class="letter">
-    <h2>叮咚！亲爱的邵靖雯同学请查收全世界最最最可爱的boy给你预约的生日祝福 💌</h2>
+  <div class="envelope" onclick="openLetter()">
+    <div class="letter">
+      <h2>叮咚！亲爱的邵靖雯同学请查收全世界最最最可爱的boy给你预约的生日祝福 💌</h2>
+    </div>
   </div>
-</div>
 
-<div id="birthdayContent">
-  <!-- 原来的生日祝福内容 -->
-  <div class="container">
-    <div class="sparkles" id="sparkles"></div>
-    <h1 class="birthday-text">邵靖雯宝宝生日快乐</h1>
-    <p class="wish-text">
-      <span class="paragraph">20岁生日快乐呀</span>
-      <span class="paragraph">一岁一礼 一寸欢喜</span>
-      <span class="paragraph">
+  <div id="birthdayContent">
+    <!-- 原来的生日祝福内容 -->
+    <div class="container">
+      <div class="sparkles" id="sparkles"></div>
+      <h1 class="birthday-text">邵靖雯宝宝生日快乐</h1>
+      <p class="wish-text">
+        <span class="paragraph">20岁生日快乐呀</span>
+        <span class="paragraph">一岁一礼 一寸欢喜</span>
+        <span class="paragraph">
           很高兴能陪你度过你的20岁生日，这是我们在一起后陪你过的第一个生日。半年的时间里，我们一起走过了好多地方，我们也一起有了好多美好的记忆。
         </span>
-      <span class="paragraph">
+        <span class="paragraph">
           很抱歉这次我没能出现在你生日的现场，下次我定不会缺席。我们还在异地，所以我更加珍惜在一起的每个时刻，我们的每张合照，每张与你有关的风景，都镌刻着你我的满心憧憬和甜甜的幸福。
         </span>
-      <span class="paragraph">
+        <span class="paragraph">
           愿我们一起牵着手，一起成长，一起感受，一起成为彼此最重要的人。
         </span>
-      <span class="paragraph">
+        <span class="paragraph">
           最后，祝我最爱的宝宝生日快乐，天天开心，岁岁平安，年年有我 ❤️
         </span>
-    </p>
+      </p>
+    </div>
   </div>
-</div>
 
-<script>
-  function openLetter() {
-    const envelope = document.querySelector('.envelope');
-    const birthdayContent = document.getElementById('birthdayContent');
-
-    envelope.style.transform = 'scale(1.5) rotate(5deg)';
-    envelope.style.opacity = '0';
-
-    setTimeout(() => {
-      envelope.style.display = 'none';
-      birthdayContent.style.display = 'block';
-      document.body.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #2d1f3d 100%)';
+  <script>
+    function openLetter() {
+      const envelope = document.querySelector('.envelope');
+      const birthdayContent = document.getElementById('birthdayContent');
+      
+      envelope.style.transform = 'scale(1.5) rotate(5deg)';
+      envelope.style.opacity = '0';
+      
       setTimeout(() => {
-        birthdayContent.style.opacity = '1';
-        createSparkles();
-      }, 100);
-    }, 800);
-  }
-
-  function createSparkles() {
-    const sparklesContainer = document.getElementById('sparkles');
-    const numberOfSparkles = 100;
-
-    function createSnowflake() {
-      const sparkle = document.createElement('div');
-      sparkle.className = 'sparkle';
-      sparkle.style.left = Math.random() * 100 + '%';
-      sparkle.style.animationDelay = Math.random() * 5 + 's';
-      sparkle.style.opacity = Math.random() * 0.3 + 0.7;
-      sparklesContainer.appendChild(sparkle);
-
-      setTimeout(() => {
-        sparkle.remove();
-        createSnowflake();
-      }, 15000);
+        envelope.style.display = 'none';
+        birthdayContent.style.display = 'block';
+        document.body.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #2d1f3d 100%)';
+        setTimeout(() => {
+          birthdayContent.style.opacity = '1';
+          createSparkles();
+        }, 100);
+      }, 800);
     }
 
-    for (let i = 0; i < numberOfSparkles; i++) {
-      setTimeout(() => {
-        createSnowflake();
-      }, Math.random() * 5000);
+    function createSparkles() {
+      const sparklesContainer = document.getElementById('sparkles');
+      const numberOfSparkles = 100;
+
+      function createSnowflake() {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.animationDelay = Math.random() * 5 + 's';
+        sparkle.style.opacity = Math.random() * 0.3 + 0.7;
+        sparklesContainer.appendChild(sparkle);
+
+        setTimeout(() => {
+          sparkle.remove();
+          createSnowflake();
+        }, 15000);
+      }
+
+      for (let i = 0; i < numberOfSparkles; i++) {
+        setTimeout(() => {
+          createSnowflake();
+        }, Math.random() * 5000);
+      }
     }
-  }
 
-  function createHearts() {
-    const heartsContainer = document.createElement('div');
-    heartsContainer.className = 'hearts';
-    document.querySelector('.envelope').appendChild(heartsContainer);
+    function createHearts() {
+      const heartsContainer = document.createElement('div');
+      heartsContainer.className = 'hearts';
+      document.querySelector('.envelope').appendChild(heartsContainer);
 
-    function addHeart() {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.innerHTML = '❤';
-      heart.style.left = Math.random() * 100 + '%';
-      heart.style.setProperty('--tx', (Math.random() * 100 - 50) + 'px');
-      heart.style.setProperty('--rot', (Math.random() * 360) + 'deg');
-      heartsContainer.appendChild(heart);
+      function addHeart() {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '❤';
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.setProperty('--tx', (Math.random() * 100 - 50) + 'px');
+        heart.style.setProperty('--rot', (Math.random() * 360) + 'deg');
+        heartsContainer.appendChild(heart);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 4000);
+        setTimeout(() => {
+          heart.remove();
+        }, 4000);
+      }
+
+      setInterval(addHeart, 300);
     }
 
-    setInterval(addHeart, 300);
-  }
-
-  window.addEventListener('load', createHearts);
-</script>
+    window.addEventListener('load', createHearts);
+  </script>
 </body>
 </html>
